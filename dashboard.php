@@ -10,8 +10,8 @@
 	}
 	
 	// add IP entry to table
-	$sql = "insert into workers(worker_ip,last_ping) values('".$_SERVER['REMOTE_ADDR']."', now())";
-	update($sql);
+	#$sql = "insert into workers(worker_ip,last_ping) values('".$_SERVER['REMOTE_ADDR']."', now())";
+	#update($sql);
 ?>
 <!doctype html>
 <html>
@@ -25,7 +25,7 @@
     	<div class="row">
     		<div class="col-md-12 text-center">
     			<h2 style="font-weight:bold;">Connected to cluster !</h2><hr>
-    			<p>To disconnect your device from the cluster, please click the button below<br><br>
+    			<p id="demo">To disconnect your device from the cluster, please click the button below<br><br>
     			<a class="btn btn-primary" href="logout.php">Disconnect</a>.</p>
     		</div>
     	<div>
@@ -39,8 +39,8 @@ $(document).ready(function() {
 	// update server about your
 	// presence every 5 second
 	setInterval(function(){
-		$.get("update.php", function(data, status){
-        	console.log(data);
+		$.post("update.php", function(data, status){
+       		window.alert(data);
     	});
 	}, 5000);
 
