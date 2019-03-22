@@ -1,0 +1,5 @@
+Setting up this is very simple all you have to do is  put unzip folder in the apache directory. Then connect other computers to it this website. And then we have to  give a job to main server by getting into the apache directory and running file process.php with 3 command line variables first is data to process. second is javascript function file how to process data and last is how to merge the data coming from worker computers. So after this main server will divide file into few parts and handover files to individual workers and get the result back and merge them up
+
+for example, using the files in this diectory
+ 
+	php process.php big.txt 2.js 2.js

@@ -33,24 +33,50 @@
 <?php require_once("footer.php"); ?>
     
 <script>
-$(document).ready(function() {
+
+var x;
+
+// This function will process the job.
+function processjob(data){
+	clearInterval(x);
 	
+	// Variable to store the processed data.
+	var return_data = "";		
+	eval(JSON.parse(data).process);
+
+	// Preparing the data to be stored as a file.
+	var processed = {};
+	processed["job_id"] = JSON.parse(data).job_id;
+	processed["task_id"] = JSON.parse(data).task_id;
+	processed["file_name"] = JSON.parse(data).file;
+	processed["process"] = return_data;
+	$.post("task.php",processed,function(returndata, status){
+		console.log(returndata);
+	});
+	checkjob();
+}
+
+// This function checks for the job and if found then it processes the job.
+function checkjob(){
+	x = setInterval(function(){
+		$.get("getjob.php",function(data, status){
+			if(JSON.parse(data).message == true){
+				processjob(data);
+			}
+		});
+	}, 5000);
+}
+
+$(document).ready(function() {
 	// update server about your
 	// presence every 5 second
 	setInterval(function(){
 		$.get("update.php", function(data, status){
-        	//console.log(data);
+        	
     	});
 	}, 5000);
-	var jobCall = setInterval(getjob,5000);
-	function getjob(){
-		$.get("getjob.php", function(data, status){
-        	console.log(data);
-			if(data["message"]==true)
-			{
-				clearInterval(jobCall);
-			}
-    	}
+	// checks for the job.
+	checkjob();
 	
 });
 </script>
